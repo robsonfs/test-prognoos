@@ -17,4 +17,7 @@ class Subscriptions:
         return len(self._subs)
 
     def add(self, sub):
+        if sub in self._subs:
+            return False
         self._subs.append(sub)
+        return True

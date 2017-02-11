@@ -19,3 +19,7 @@ class TestSubscriptions(TestCase):
         self.subs.add(self.sub)
         final_len = len(self.subs)
         self.assertEqual(initial_len, final_len - 1)
+
+    def test_not_add_duplicated_elements(self):
+        self.subs.add(self.sub)
+        self.assertFalse(self.subs.add(self.sub))
