@@ -58,3 +58,25 @@ class TestSubscriptions(TestCase):
 
         active_subs = self.subs.get_total_actives()
         self.assertTrue(active_subs == 2)
+
+    def test_get_total_active_by_month(self):
+        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6)
+        sub2 = Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6)
+        sub3 = Subscription('', '4244', '2015-10-30 19:04:28', 'ATIVA', 1, 6)
+
+        self.subs.add(sub1)
+        self.subs.add(sub2)
+        self.subs.add(sub3)
+
+        active_subs = self.subs.get_total_actives('2015-10')
+        self.assertTrue(active_subs == 2)
+
+    def test_get_period(self):
+        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6)
+        period = self.subs.get_period(sub1.payment_date)
+        self.assertEqual(period, '2015-10')
+        sub2 = Subscription(
+            '2015-12-15 07:30:01', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6
+        )
+        period = self.subs.get_period(sub2.date_canceled)
+        self.assertEqual(period, '2015-12')
