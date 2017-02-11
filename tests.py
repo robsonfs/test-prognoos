@@ -46,3 +46,15 @@ class TestSubscriptions(TestCase):
 
         cancelations = self.subs.get_total_cancelations()
         self.assertTrue(cancelations == 2)
+
+    def test_get_total_active(self):
+        sub1 = Subscription('', '4242', '2015-10-5', 'ATIVA', 1, 6)
+        sub2 = Subscription('', '4243', '2015-10-5', 'ATIVA', 1, 6)
+        sub3 = Subscription('2015-10-11', '4244', '2015-10-5', 'CANCELADA', 0, 13)
+
+        self.subs.add(sub1)
+        self.subs.add(sub2)
+        self.subs.add(sub3)
+
+        active_subs = self.subs.get_total_actives()
+        self.assertTrue(active_subs == 2)

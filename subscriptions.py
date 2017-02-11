@@ -31,3 +31,6 @@ class Subscriptions:
             if sub.date_canceled:
                 amount += 1
         return amount
+
+    def get_total_actives(self):
+        return len([x for x in self._subs if x.is_active])
