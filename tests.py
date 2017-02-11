@@ -10,10 +10,12 @@ from subscriptions import Subscription, Subscriptions
 
 class TestSubscriptions(TestCase):
 
+    def setUp(self):
+        self.sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', 0, 11)
+        self.subs = Subscriptions()
+
     def test_add_increase_subscritions_list(self):
-        sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', 0, 11)
-        subs = Subscriptions()
-        initial_len = len(subs)
-        subs.add(sub)
-        final_len = len(subs)
+        initial_len = len(self.subs)
+        self.subs.add(self.sub)
+        final_len = len(self.subs)
         self.assertEqual(initial_len, final_len - 1)
