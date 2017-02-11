@@ -1,7 +1,7 @@
 from unittest import TestCase
 from subscriptions import Subscription, Subscriptions
 
-# Criar estrutura de dados para armazenar dados das assinaturas
+# Criar estrutura de dados para armazenar dados das assinaturas [Done]
 # Ler arquivo de dados e armazenar na estrutura criada
 # Calcular o total de assinaturas para um dado mês
 # Determinar todos os meses nos quais houve cancelamentos
@@ -16,4 +16,4 @@ class TestSubscriptions(TestCase):
         initial_len = len(subs)
         subs.add(sub)
         final_len = len(subs)
-        self.assertEqual(initial_len, final_len + 1)
+        self.assertEqual(initial_len, final_len - 1)
