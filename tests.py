@@ -23,3 +23,14 @@ class TestSubscriptions(TestCase):
     def test_not_add_duplicated_elements(self):
         self.subs.add(self.sub)
         self.assertFalse(self.subs.add(self.sub))
+
+    def test_get_total_subs(self):
+        sub1 = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', 0, 11)
+        sub2 = Subscription('2015-10-10', '4243', '2015-10-5', 'CANCELADA', 0, 11)
+        sub3 = Subscription('2015-10-10', '4244', '2015-10-5', 'CANCELADA', 0, 11)
+
+        self.subs.add(sub1)
+        self.subs.add(sub2)
+        self.assertTrue(self.subs.get_total_subs() == 2)
+        self.subs.add(sub3)
+        self.assertTrue(self.subs.get_total_subs() == 3)

@@ -21,3 +21,6 @@ class Subscriptions:
             return False
         self._subs.append(sub)
         return True
+
+    def get_total_subs(self):
+        return len(self._subs)
