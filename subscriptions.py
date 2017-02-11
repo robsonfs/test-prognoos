@@ -31,7 +31,10 @@ class Subscriptions:
     def get_total_actives(self, period=None):
         actives = [x for x in self._subs if x.is_active]
         if period:
-            pass
+            filtered = filter(
+                lambda x: self.get_period(x.payment_date) == period, actives
+            )
+            return len([x for x in filtered])
         return len(actives)
 
     def get_period(self, date_string):
