@@ -119,3 +119,11 @@ class TestSubscriptions(unittest.TestCase):
         months_count = self.subs.load_months()
         self.assertEqual(months_count, 6)
         self.assertEqual(months_count, len(self.subs._months))
+
+    def test_load_months_clear(self):
+        self.subs._months.extend(['apenas', 'um', 'teste'])
+        sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', 0, 11)
+        self.subs.add(sub1)
+        self.subs.load_months()
+
+        self.assertEqual(['2015-02', '2016-03'], self.subs._months)

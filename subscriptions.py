@@ -58,5 +58,6 @@ class Subscriptions:
             months.add(self.get_period(sub.payment_date))
         months = list(months)
         months.sort()
+        self._months.clear()
         self._months.extend(months)
         return len(months)
