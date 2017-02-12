@@ -25,8 +25,14 @@ class Subscriptions:
     def get_total_subs(self):
         return len(self._subs)
 
-    def get_total_cancelations(self):
-        return len([x for x in self._subs if x.date_canceled])
+    def get_total_cancelations(self, period=None):
+        cancelations = [x for x in self._subs if x.date_canceled]
+        if period:
+            filtered = filter(
+                lambda x: self.get_period(x.date_canceled) == period, cancelations
+            )
+            return len([x for x in filtered])
+        return len(cancelations)
 
     def get_total_actives(self, period=None):
         actives = [x for x in self._subs if x.is_active]

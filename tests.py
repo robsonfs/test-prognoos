@@ -80,3 +80,15 @@ class TestSubscriptions(TestCase):
         )
         period = self.subs.get_period(sub2.date_canceled)
         self.assertEqual(period, '2015-12')
+
+    def test_get_total_cancelations_by_month(self):
+        sub1 = Subscription('2015-10-30 01:44:28', '4242', '2015-10-04 01:44:28', 'CANCELADA', 0, 11)
+        sub2 = Subscription('2015-12-16 01:44:28', '4243', '2015-12-15 07:30:01', 'CANCELADA', 0, 11)
+        sub3 = Subscription('2015-10-25 01:44:28', '4244', '2015-10-17 09:55:28', 'CANCELADA', 0, 11)
+
+        self.subs.add(sub1)
+        self.subs.add(sub2)
+        self.subs.add(sub3)
+
+        cancelations = self.subs.get_total_cancelations('2015-10')
+        self.assertTrue(cancelations == 2)
