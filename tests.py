@@ -1,4 +1,5 @@
-from unittest import TestCase
+import unittest
+from unittest import mock
 from subscriptions import Subscription, Subscriptions
 
 # Criar estrutura de dados para armazenar dados das assinaturas [Done]
@@ -8,7 +9,7 @@ from subscriptions import Subscription, Subscriptions
 # Para cada mês, retornar uma tupla com as seguintes informações:
 # (mes_ano, novos_usuarios, total_usuarios, usuarios_ativos, cancelamentos)
 
-class TestSubscriptions(TestCase):
+class TestSubscriptions(unittest.TestCase):
 
     def setUp(self):
         self.sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', 0, 11)
@@ -92,3 +93,29 @@ class TestSubscriptions(TestCase):
 
         cancelations = self.subs.get_total_cancelations('2015-10')
         self.assertTrue(cancelations == 2)
+
+    @unittest.skip("TODO: will be fixed later...")
+    def test_get_total_subs_by_month(self):
+        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6)
+        sub2 = Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6)
+        sub3 = Subscription('', '4244', '2015-10-30 19:04:28', 'ATIVA', 1, 6)
+
+        self.subs.add(sub1)
+        self.subs.add(sub2)
+        self.subs.add(sub3)
+
+        subs_on_october = self.subs.get_total_subs('2015-10')
+        self.assertTrue(subs_on_october == 2)
+
+    def test_load_months(self):
+        sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', 0, 11)
+        sub2 = Subscription('2016-01-16 01:44:28', '4243', '2015-12-15 07:30:01', 'CANCELADA', 0, 11)
+        sub3 = Subscription('2015-11-25 01:44:28', '4244', '2015-10-17 09:55:28', 'CANCELADA', 0, 11)
+
+        self.subs.add(sub1)
+        self.subs.add(sub2)
+        self.subs.add(sub3)
+
+        months_count = self.subs.load_months()
+        self.assertEqual(months_count, 6)
+        self.assertEqual(months_count, len(self.subs._months))

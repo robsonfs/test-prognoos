@@ -12,6 +12,7 @@ class Subscriptions:
 
     def __init__(self):
         self._subs = []
+        self._months = []
 
     def __len__(self):
         return len(self._subs)
@@ -22,7 +23,10 @@ class Subscriptions:
         self._subs.append(sub)
         return True
 
-    def get_total_subs(self):
+    def get_total_subs(self, period=None):
+        if period:
+            pass
+            # retorna a quantidade de usuários ativos no mês anterior
         return len(self._subs)
 
     def get_total_cancelations(self, period=None):
@@ -45,3 +49,14 @@ class Subscriptions:
 
     def get_period(self, date_string):
         return date_string.split(' ')[0][:-3]
+
+    def load_months(self):
+        months = set()
+        for sub in self._subs:
+            if sub.date_canceled:
+                months.add(self.get_period(sub.date_canceled))
+            months.add(self.get_period(sub.payment_date))
+        months = list(months)
+        months.sort()
+        self._months.extend(months)
+        return len(months)
