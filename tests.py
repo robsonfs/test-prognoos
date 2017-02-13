@@ -133,3 +133,21 @@ class TestSubscriptions(unittest.TestCase):
         self.subs.load_months()
 
         self.assertEqual(['2015-02', '2016-03'], self.subs._months)
+
+    def test_get_new(self):
+        subs = [
+            Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', '0', '11'),
+            Subscription('2016-01-16 01:44:28', '4243', '2015-02-15 07:30:01', 'CANCELADA', '0', '11'),
+            Subscription('', '4244', '2015-10-01 09:55:28', 'ATIVA', '1', '11'),
+            Subscription('', '4245', '2015-10-17 09:55:28', 'ATIVA', '1', '11'),
+            Subscription('', '4246', '2015-10-31 09:55:28', 'ATIVA', '1', '11')
+        ]
+
+        for sub in subs:
+            self.subs.add(sub)
+
+        amount_2015_02 = self.subs.get_new('2015-02')
+        self.assertEqual(amount_2015_02, 2)
+
+        amount_2015_10 = self.subs.get_new('2015-10')
+        self.assertEqual(amount_2015_10, 3)

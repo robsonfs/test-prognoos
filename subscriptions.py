@@ -61,3 +61,10 @@ class Subscriptions:
         self._months.clear()
         self._months.extend(months)
         return len(months)
+
+    def get_new(self, month):
+        amount = 0
+        return len(
+            [x for x in self._subs if self.get_period(x.payment_date) == month]
+        )
+        return amount
