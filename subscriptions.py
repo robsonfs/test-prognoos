@@ -25,7 +25,6 @@ class Subscriptions:
 
     def get_total_subs(self, period=None):
         self.load_months()
-        print(self._months)
         if not period:
             period = self._months[0]
         return self.get_total_actives(period) + self.get_total_cancelations(period)
@@ -40,7 +39,7 @@ class Subscriptions:
         return len(cancelations)
 
     def get_total_actives(self, period=None):
-        actives = [x for x in self._subs if x.is_active]
+        actives = [x for x in self._subs if int(x.is_active)]
         if period:
             filtered = filter(
                 lambda x: self.get_period(x.payment_date) == period, actives

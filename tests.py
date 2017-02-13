@@ -12,7 +12,7 @@ from subscriptions import Subscription, Subscriptions
 class TestSubscriptions(unittest.TestCase):
 
     def setUp(self):
-        self.sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', 0, 11)
+        self.sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', '0', '11')
         self.subs = Subscriptions()
 
     def test_add_increase_subscritions_list(self):
@@ -26,9 +26,9 @@ class TestSubscriptions(unittest.TestCase):
         self.assertFalse(self.subs.add(self.sub))
 
     def test_get_total_subs(self):
-        sub1 = Subscription('2015-10-10', '4242', '2015-10-05', 'CANCELADA', 0, 11)
-        sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', 0, 11)
-        sub3 = Subscription('2015-10-10', '4244', '2015-10-05', 'CANCELADA', 0, 11)
+        sub1 = Subscription('2015-10-10', '4242', '2015-10-05', 'CANCELADA', '0', '11')
+        sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', '0', '11')
+        sub3 = Subscription('2015-10-10', '4244', '2015-10-05', 'CANCELADA', '0', '11')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
@@ -37,9 +37,9 @@ class TestSubscriptions(unittest.TestCase):
         self.assertEqual(self.subs.get_total_subs(), 3)
 
     def test_get_total_cancelations(self):
-        sub1 = Subscription('', '4242', '2015-10-5', 'ATIVA', 1, 6)
-        sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', 0, 11)
-        sub3 = Subscription('2015-10-11', '4244', '2015-10-05', 'CANCELADA', 0, 13)
+        sub1 = Subscription('', '4242', '2015-10-5', 'ATIVA', '1', '6')
+        sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', '0', '11')
+        sub3 = Subscription('2015-10-11', '4244', '2015-10-05', 'CANCELADA', '0', '13')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
@@ -49,21 +49,21 @@ class TestSubscriptions(unittest.TestCase):
         self.assertTrue(cancelations == 2)
 
     def test_get_total_active(self):
-        sub1 = Subscription('', '4242', '2015-10-05', 'ATIVA', 1, 6)
-        sub2 = Subscription('', '4243', '2015-10-05', 'ATIVA', 1, 6)
-        sub3 = Subscription('2015-10-11', '4244', '2015-10-05', 'CANCELADA', 0, 13)
+        sub1 = Subscription('', '4242', '2015-10-05', 'ATIVA', '1', '6')
+        sub2 = Subscription('', '4243', '2015-10-05', 'ATIVA', '1', '6')
+        sub3 = Subscription('2015-10-11', '4244', '2015-10-05', 'CANCELADA', '0', '13')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
         self.subs.add(sub3)
 
         active_subs = self.subs.get_total_actives()
-        self.assertTrue(active_subs == 2)
+        self.assertEqual(active_subs, 2)
 
     def test_get_total_active_by_month(self):
-        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6)
-        sub2 = Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6)
-        sub3 = Subscription('', '4244', '2015-10-30 19:04:28', 'ATIVA', 1, 6)
+        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', '1', '6')
+        sub2 = Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', '1', '6')
+        sub3 = Subscription('', '4244', '2015-10-30 19:04:28', 'ATIVA', '1', '6')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
@@ -73,19 +73,19 @@ class TestSubscriptions(unittest.TestCase):
         self.assertTrue(active_subs == 2)
 
     def test_get_period(self):
-        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6)
+        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', '1', '6')
         period = self.subs.get_period(sub1.payment_date)
         self.assertEqual(period, '2015-10')
         sub2 = Subscription(
-            '2015-12-15 07:30:01', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6
+            '2015-12-15 07:30:01', '4243', '2015-12-15 07:30:01', 'ATIVA', '1', '6'
         )
         period = self.subs.get_period(sub2.date_canceled)
         self.assertEqual(period, '2015-12')
 
     def test_get_total_cancelations_by_month(self):
-        sub1 = Subscription('2015-10-30 01:44:28', '4242', '2015-10-04 01:44:28', 'CANCELADA', 0, 11)
-        sub2 = Subscription('2015-12-16 01:44:28', '4243', '2015-12-15 07:30:01', 'CANCELADA', 0, 11)
-        sub3 = Subscription('2015-10-25 01:44:28', '4244', '2015-10-17 09:55:28', 'CANCELADA', 0, 11)
+        sub1 = Subscription('2015-10-30 01:44:28', '4242', '2015-10-04 01:44:28', 'CANCELADA', '0', '11')
+        sub2 = Subscription('2015-12-16 01:44:28', '4243', '2015-12-15 07:30:01', 'CANCELADA', '0', '11')
+        sub3 = Subscription('2015-10-25 01:44:28', '4244', '2015-10-17 09:55:28', 'CANCELADA', '0', '11')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
@@ -94,18 +94,17 @@ class TestSubscriptions(unittest.TestCase):
         cancelations = self.subs.get_total_cancelations('2015-10')
         self.assertTrue(cancelations == 2)
 
-    @unittest.skip("Teste quebrando devido a um bug em outro método")
     def test_get_total_subs_by_month(self):
         subs = [
-            Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6),
-            Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6),
-            Subscription('', '4244', '2015-10-29 19:04:28', 'ATIVA', 1, 6),
-            Subscription('', '4245', '2015-11-30 19:04:28', 'ATIVA', 1, 6),
-            Subscription('', '4248', '2015-11-27 19:04:28', 'ATIVA', 1, 6),
-            Subscription('', '4246', '2016-01-15 16:04:28', 'ATIVA', 1, 6),
-            Subscription('', '4247', '2016-02-13 18:33:28', 'ATIVA', 1, 6),
-            Subscription('2016-02-15 18:33:28', '4249', '2016-02-13 18:33:28', 'CANCELADA', 1, 13),
-            Subscription('2015-10-15 18:33:28', '4250', '2015-10-13 08:24:00', 'CANCELADA', 1, 13)
+            Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', '1', '6'),
+            Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', '1', '6'),
+            Subscription('', '4244', '2015-10-29 19:04:28', 'ATIVA', '1', '6'),
+            Subscription('', '4245', '2015-11-30 19:04:28', 'ATIVA', '1', '6'),
+            Subscription('', '4248', '2015-11-27 19:04:28', 'ATIVA', '1', '6'),
+            Subscription('', '4246', '2016-01-15 16:04:28', 'ATIVA', '1', '6'),
+            Subscription('', '4247', '2016-02-13 18:33:28', 'ATIVA', '1', '6'),
+            Subscription('2016-02-15 18:33:28', '4249', '2016-02-13 18:33:28', 'CANCELADA', '0', '13'),
+            Subscription('2015-10-15 18:33:28', '4250', '2015-10-13 08:24:00', 'CANCELADA', '0', '13')
         ]
 
         for sub in subs:
@@ -115,9 +114,9 @@ class TestSubscriptions(unittest.TestCase):
         self.assertEqual(subs_on_october, 3)
 
     def test_load_months(self):
-        sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', 0, 11)
-        sub2 = Subscription('2016-01-16 01:44:28', '4243', '2015-12-15 07:30:01', 'CANCELADA', 0, 11)
-        sub3 = Subscription('2015-11-25 01:44:28', '4244', '2015-10-17 09:55:28', 'CANCELADA', 0, 11)
+        sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', '0', '11')
+        sub2 = Subscription('2016-01-16 01:44:28', '4243', '2015-12-15 07:30:01', 'CANCELADA', '0', '11')
+        sub3 = Subscription('2015-11-25 01:44:28', '4244', '2015-10-17 09:55:28', 'CANCELADA', '0', '11')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
@@ -129,7 +128,7 @@ class TestSubscriptions(unittest.TestCase):
 
     def test_load_months_clear(self):
         self.subs._months.extend(['apenas', 'um', 'teste'])
-        sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', 0, 11)
+        sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', '0', '11')
         self.subs.add(sub1)
         self.subs.load_months()
 
