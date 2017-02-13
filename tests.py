@@ -26,20 +26,20 @@ class TestSubscriptions(unittest.TestCase):
         self.assertFalse(self.subs.add(self.sub))
 
     def test_get_total_subs(self):
-        sub1 = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', 0, 11)
-        sub2 = Subscription('2015-10-10', '4243', '2015-10-5', 'CANCELADA', 0, 11)
-        sub3 = Subscription('2015-10-10', '4244', '2015-10-5', 'CANCELADA', 0, 11)
+        sub1 = Subscription('2015-10-10', '4242', '2015-10-05', 'CANCELADA', 0, 11)
+        sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', 0, 11)
+        sub3 = Subscription('2015-10-10', '4244', '2015-10-05', 'CANCELADA', 0, 11)
 
         self.subs.add(sub1)
         self.subs.add(sub2)
-        self.assertTrue(self.subs.get_total_subs() == 2)
+        self.assertEqual(self.subs.get_total_subs(), 2)
         self.subs.add(sub3)
-        self.assertTrue(self.subs.get_total_subs() == 3)
+        self.assertEqual(self.subs.get_total_subs(), 3)
 
     def test_get_total_cancelations(self):
         sub1 = Subscription('', '4242', '2015-10-5', 'ATIVA', 1, 6)
-        sub2 = Subscription('2015-10-10', '4243', '2015-10-5', 'CANCELADA', 0, 11)
-        sub3 = Subscription('2015-10-11', '4244', '2015-10-5', 'CANCELADA', 0, 13)
+        sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', 0, 11)
+        sub3 = Subscription('2015-10-11', '4244', '2015-10-05', 'CANCELADA', 0, 13)
 
         self.subs.add(sub1)
         self.subs.add(sub2)
@@ -49,9 +49,9 @@ class TestSubscriptions(unittest.TestCase):
         self.assertTrue(cancelations == 2)
 
     def test_get_total_active(self):
-        sub1 = Subscription('', '4242', '2015-10-5', 'ATIVA', 1, 6)
-        sub2 = Subscription('', '4243', '2015-10-5', 'ATIVA', 1, 6)
-        sub3 = Subscription('2015-10-11', '4244', '2015-10-5', 'CANCELADA', 0, 13)
+        sub1 = Subscription('', '4242', '2015-10-05', 'ATIVA', 1, 6)
+        sub2 = Subscription('', '4243', '2015-10-05', 'ATIVA', 1, 6)
+        sub3 = Subscription('2015-10-11', '4244', '2015-10-05', 'CANCELADA', 0, 13)
 
         self.subs.add(sub1)
         self.subs.add(sub2)
