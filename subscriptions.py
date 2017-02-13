@@ -24,10 +24,11 @@ class Subscriptions:
         return True
 
     def get_total_subs(self, period=None):
-        if period:
-            pass
-            # retorna a quantidade de usuários ativos no mês anterior
-        return len(self._subs)
+        self.load_months()
+        print(self._months)
+        if not period:
+            period = self._months[0]
+        return self.get_total_actives(period) + self.get_total_cancelations(period)
 
     def get_total_cancelations(self, period=None):
         cancelations = [x for x in self._subs if x.date_canceled]

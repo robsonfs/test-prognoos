@@ -94,18 +94,24 @@ class TestSubscriptions(unittest.TestCase):
         cancelations = self.subs.get_total_cancelations('2015-10')
         self.assertTrue(cancelations == 2)
 
-    @unittest.skip("TODO: will be fixed later...")
     def test_get_total_subs_by_month(self):
-        sub1 = Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6)
-        sub2 = Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6)
-        sub3 = Subscription('', '4244', '2015-10-30 19:04:28', 'ATIVA', 1, 6)
+        subs = [
+            Subscription('', '4242', '2015-10-30 01:44:28', 'ATIVA', 1, 6),
+            Subscription('', '4243', '2015-12-15 07:30:01', 'ATIVA', 1, 6),
+            Subscription('', '4244', '2015-10-29 19:04:28', 'ATIVA', 1, 6),
+            Subscription('', '4245', '2015-11-30 19:04:28', 'ATIVA', 1, 6),
+            Subscription('', '4248', '2015-11-27 19:04:28', 'ATIVA', 1, 6),
+            Subscription('', '4246', '2016-01-15 16:04:28', 'ATIVA', 1, 6),
+            Subscription('', '4247', '2016-02-13 18:33:28', 'ATIVA', 1, 6),
+            Subscription('2016-02-15 18:33:28', '4249', '2016-02-13 18:33:28', 'CANCELADA', 1, 13),
+            Subscription('2015-10-15 18:33:28', '4250', '2015-10-13 08:24:00', 'CANCELADA', 1, 13)
+        ]
 
-        self.subs.add(sub1)
-        self.subs.add(sub2)
-        self.subs.add(sub3)
+        for sub in subs:
+            self.subs.add(sub)
 
         subs_on_october = self.subs.get_total_subs('2015-10')
-        self.assertTrue(subs_on_october == 2)
+        self.assertEqual(subs_on_october, 2)
 
     def test_load_months(self):
         sub1 = Subscription('2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', 0, 11)
