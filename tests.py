@@ -156,6 +156,26 @@ class TestSubscriptions(unittest.TestCase):
         amount_2015_10 = self.subs.get_new('2015-10')
         self.assertEqual(amount_2015_10, 3)
 
+    @mock.patch.object(Loader, 'loader_from_csv')
+    def test_populate_from_csv(self, mock_csv_loader):
+        number_subs = self.subs.populate_from_csv('dataset path')
+        mock_csv_loader.assert_called_with('dataset path')
+
+
+    @mock.patch.object(Loader, 'loader_from_csv')
+    def test_populate_from_csv_increases_subscriptions(self, mock_csv_loader):
+        subs = [
+            ['2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', '0', '11'],
+            ['2016-01-16 01:44:28', '4243', '2015-02-15 07:30:01', 'CANCELADA', '0', '11'],
+            ['', '4244', '2015-10-01 09:55:28', 'ATIVA', '1', '11'],
+            ['', '4245', '2015-10-17 09:55:28', 'ATIVA', '1', '11'],
+            ['', '4246', '2015-10-31 09:55:28', 'ATIVA', '1', '11']
+        ]
+        mock_csv_loader.return_value = subs
+        number_subs = self.subs.populate_from_csv('dataset path')
+        self.assertEqual(number_subs, 5)
+        self.assertEqual(len(self.subs._subs), 5)
+
 class TestLoader(unittest.TestCase):
 
     @mock.patch('subscriptions.open')

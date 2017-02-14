@@ -71,6 +71,12 @@ class Subscriptions:
         )
         return amount
 
+    def populate_from_csv(self, csv_path):
+        lines = self.loader.loader_from_csv(csv_path)
+        for line in lines:
+            self.add(Subscription(*line))
+        return len(lines)
+
 class Loader:
 
     def loader_from_csv(self, csv_path, mode='r'):
