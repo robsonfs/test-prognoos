@@ -92,3 +92,8 @@ class Loader:
                     ]
                 )
         return rows
+
+class Results:
+
+    def __init__(self, subscriptions):
+        self.subscriptions = subscriptions

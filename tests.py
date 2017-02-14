@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-from subscriptions import Subscription, Subscriptions, Loader
+from subscriptions import Subscription, Subscriptions, Loader, Results
 
 # Criar estrutura de dados para armazenar dados das assinaturas [Done]
 # Ler arquivo de dados e armazenar na estrutura criada
@@ -184,3 +184,12 @@ class TestLoader(unittest.TestCase):
         data = loader.loader_from_csv('any path')
         mock_open.assert_called_with('any path', 'r')
         self.assertIsInstance(data, list)
+
+class TestResults(unittest.TestCase):
+
+    def test_results_atts(self):
+        loader = Loader()
+        subs = Subscriptions(loader)
+        results = Results(subs)
+
+        self.assertIsInstance(results.subscriptions, Subscriptions)
