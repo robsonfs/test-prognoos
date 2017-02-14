@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-from subscriptions import Subscription, Subscriptions
+from subscriptions import Subscription, Subscriptions, Loader
 
 # Criar estrutura de dados para armazenar dados das assinaturas [Done]
 # Ler arquivo de dados e armazenar na estrutura criada
@@ -13,7 +13,9 @@ class TestSubscriptions(unittest.TestCase):
 
     def setUp(self):
         self.sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', '0', '11')
-        self.subs = Subscriptions()
+        loader = Loader()
+        self.subs = Subscriptions(loader)
+
 
     def test_add_increase_subscritions_list(self):
         initial_len = len(self.subs)
@@ -151,3 +153,11 @@ class TestSubscriptions(unittest.TestCase):
 
         amount_2015_10 = self.subs.get_new('2015-10')
         self.assertEqual(amount_2015_10, 3)
+
+class TestLoader(unittest.TestCase):
+
+    @mock.patch('subscriptions.open')
+    def test_loader_from_csv(self, mock_open):
+        loader = Loader()
+        loader.loader_from_csv('any path')
+        mock_open.assert_called_with('any path', 'r')

@@ -10,7 +10,7 @@ Subscription = namedtuple(
 
 class Subscriptions:
 
-    def __init__(self):
+    def __init__(self, loader):
         self._subs = []
         self._months = []
 
@@ -68,3 +68,11 @@ class Subscriptions:
             [x for x in self._subs if self.get_period(x.payment_date) == month]
         )
         return amount
+
+class Loader:
+
+    def loader_from_csv(self, csv_path, mode='r'):
+        # f = open(csv_path, mode)
+        with open(csv_path, mode) as dataset:
+            for line in dataset:
+                print(line)
