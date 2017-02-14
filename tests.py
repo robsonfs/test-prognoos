@@ -16,8 +16,10 @@ class TestSubscriptions(unittest.TestCase):
         loader = Loader()
         self.subs = Subscriptions(loader)
 
+    def test_subs_object_has_a_loader(self):
+        self.assertIsInstance(self.subs.loader, Loader)
 
-    def test_add_increase_subscritions_list(self):
+    def test_add_increases_subscritions_list(self):
         initial_len = len(self.subs)
         self.subs.add(self.sub)
         final_len = len(self.subs)

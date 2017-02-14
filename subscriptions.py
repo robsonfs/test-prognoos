@@ -13,6 +13,7 @@ class Subscriptions:
     def __init__(self, loader):
         self._subs = []
         self._months = []
+        self.loader = loader
 
     def __len__(self):
         return len(self._subs)
