@@ -1,3 +1,4 @@
+import csv
 from collections import namedtuple
 
 Subscription = namedtuple(
@@ -73,7 +74,15 @@ class Subscriptions:
 class Loader:
 
     def loader_from_csv(self, csv_path, mode='r'):
-        # f = open(csv_path, mode)
+        rows = []
         with open(csv_path, mode) as dataset:
-            for line in dataset:
-                print(line)
+            dataset_reader = csv.DictReader(dataset)
+            for row in dataset_reader:
+                rows.append(
+                    [
+                        row['date_canceled'], row['id_subs_details'],
+                        row['payment_date'], row['status'], row['is_active'],
+                        row['reason_canceled']
+                    ]
+                )
+        return rows

@@ -12,7 +12,7 @@ from subscriptions import Subscription, Subscriptions, Loader
 class TestSubscriptions(unittest.TestCase):
 
     def setUp(self):
-        self.sub = Subscription('2015-10-10', '4242', '2015-10-5', 'CANCELADA', '0', '11')
+        self.sub = Subscription('2015-10-10', '4242', '2015-10-05', 'CANCELADA', '0', '11')
         loader = Loader()
         self.subs = Subscriptions(loader)
 
@@ -161,5 +161,6 @@ class TestLoader(unittest.TestCase):
     @mock.patch('subscriptions.open')
     def test_loader_from_csv(self, mock_open):
         loader = Loader()
-        loader.loader_from_csv('any path')
+        data = loader.loader_from_csv('any path')
         mock_open.assert_called_with('any path', 'r')
+        self.assertIsInstance(data, list)
