@@ -187,9 +187,13 @@ class TestLoader(unittest.TestCase):
 
 class TestResults(unittest.TestCase):
 
-    def test_results_atts(self):
+    def setUp(self):
         loader = Loader()
         subs = Subscriptions(loader)
-        results = Results(subs)
+        self.results = Results(subs)
 
-        self.assertIsInstance(results.subscriptions, Subscriptions)
+    def test_results_atts(self):
+        self.assertIsInstance(self.results.subscriptions, Subscriptions)
+
+    def test_show_results(self):
+        pass
