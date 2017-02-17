@@ -20,6 +20,9 @@ class Subscriptions:
         return len(self._subs)
 
     def add(self, sub):
+        if sub.__class__.__name__ != 'Subscription':
+            raise ValueError("Invalid argument")
+
         if sub in self._subs:
             return False
         self._subs.append(sub)
@@ -65,11 +68,9 @@ class Subscriptions:
         return len(months)
 
     def get_new(self, month):
-        amount = 0
         return len(
             [x for x in self._subs if self.get_period(x.payment_date) == month]
         )
-        return amount
 
     def populate_from_csv(self, csv_path):
         lines = self.loader.loader_from_csv(csv_path)
@@ -101,3 +102,13 @@ class Results:
 
     def show_results(self, data_provider):
         self.subscriptions.populate_from_csv(data_provider)
+        print("Ano-Mês\tNovos\tTotal\tAtivos\tCancelamentos")
+        for month in self.subscriptions._months:
+            print(
+                "%s\t%s\t%s\t%s\t%s"%(
+                    month, self.subscriptions.get_new(month),
+                    self.subscriptions.get_total_subs(month),
+                    self.subscriptions.get_total_actives(month),
+                    self.subscriptions.get_total_cancelations(month)
+                )
+            )

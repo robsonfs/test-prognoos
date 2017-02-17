@@ -196,9 +196,9 @@ class TestResults(unittest.TestCase):
     def test_results_atts(self):
         self.assertIsInstance(self.results.subscriptions, Subscriptions)
 
-    @unittest.skip("Skiping...")
     @mock.patch('subscriptions.print')
-    def test_show_results(self, mock_print):
+    @mock.patch.object(Loader, 'loader_from_csv')
+    def test_show_results(self, mock_loader, mock_print):
         subs = [
             ['2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', '0', '11'],
             ['2016-01-16 01:44:28', '4243', '2015-02-15 07:30:01', 'CANCELADA', '0', '11'],
@@ -208,9 +208,9 @@ class TestResults(unittest.TestCase):
         ]
 
         for s in subs:
-            self.results.subscriptions.add(s)
+            self.results.subscriptions.add(Subscription(*s))
 
-        self.results.show_results()
+        self.results.show_results('data provider')
         call_count = mock_print.call_count
         self.assertEqual(call_count, 5)
 
