@@ -156,11 +156,12 @@ class TestSubscriptions(unittest.TestCase):
         amount_2015_10 = self.subs.get_new('2015-10')
         self.assertEqual(amount_2015_10, 3)
 
+    @mock.patch.object(Subscriptions, 'load_months')
     @mock.patch.object(Loader, 'loader_from_csv')
-    def test_populate_from_csv(self, mock_csv_loader):
+    def test_populate_from_csv(self, mock_csv_loader, mock_load_months):
         number_subs = self.subs.populate_from_csv('dataset path')
         mock_csv_loader.assert_called_with('dataset path')
-
+        mock_load_months.assert_called_once_with()
 
     @mock.patch.object(Loader, 'loader_from_csv')
     def test_populate_from_csv_increases_subscriptions(self, mock_csv_loader):

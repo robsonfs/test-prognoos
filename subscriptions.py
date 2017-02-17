@@ -75,6 +75,7 @@ class Subscriptions:
         lines = self.loader.loader_from_csv(csv_path)
         for line in lines:
             self.add(Subscription(*line))
+        self.load_months()
         return len(lines)
 
 class Loader:
@@ -100,4 +101,3 @@ class Results:
 
     def show_results(self, data_provider):
         self.subscriptions.populate_from_csv(data_provider)
-        
