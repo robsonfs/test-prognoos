@@ -97,3 +97,6 @@ class Results:
 
     def __init__(self, subscriptions):
         self.subscriptions = subscriptions
+
+    def show_results(self):
+        pass

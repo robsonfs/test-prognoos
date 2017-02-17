@@ -195,5 +195,19 @@ class TestResults(unittest.TestCase):
     def test_results_atts(self):
         self.assertIsInstance(self.results.subscriptions, Subscriptions)
 
-    def test_show_results(self):
-        pass
+    @mock.patch('subscriptions.print')
+    def test_show_results(self, mock_print):
+        subs = [
+            ['2016-03-30 01:44:28', '4242', '2015-02-04 01:44:28', 'CANCELADA', '0', '11'],
+            ['2016-01-16 01:44:28', '4243', '2015-02-15 07:30:01', 'CANCELADA', '0', '11'],
+            ['', '4244', '2015-10-01 09:55:28', 'ATIVA', '1', '11'],
+            ['', '4245', '2015-10-17 09:55:28', 'ATIVA', '1', '11'],
+            ['', '4246', '2015-10-31 09:55:28', 'ATIVA', '1', '11']
+        ]
+
+        for s in subs:
+            self.results.subscriptions.add(s)
+
+        self.results.show_results()
+        call_count = mock_print.call_count
+        self.assertEqual(call_count, 5)
