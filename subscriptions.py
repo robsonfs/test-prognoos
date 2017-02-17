@@ -98,5 +98,6 @@ class Results:
     def __init__(self, subscriptions):
         self.subscriptions = subscriptions
 
-    def show_results(self):
-        pass
+    def show_results(self, data_provider):
+        self.subscriptions.populate_from_csv(data_provider)
+        
