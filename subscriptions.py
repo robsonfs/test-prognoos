@@ -28,11 +28,13 @@ class Subscriptions:
         self._subs.append(sub)
         return True
 
-    def get_total_subs(self, period=None):
-        self.load_months()
-        if not period:
-            period = self._months[0]
-        return self.get_total_actives(period) + self.get_total_cancelations(period)
+    def get_total_subs(self, period):
+        if period == self._months[0]:
+            return self.get_new(period)
+        index = self._months.index(period)
+        prev_month = self._months[index - 1]
+        return (self.get_total_subs(prev_month) + self.get_new(period)) -\
+        self.get_total_cancelations(prev_month)
 
     def get_total_cancelations(self, period=None):
         cancelations = [x for x in self._subs if x.date_canceled]

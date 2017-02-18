@@ -32,13 +32,14 @@ class TestSubscriptions(unittest.TestCase):
     def test_get_total_subs(self):
         sub1 = Subscription('2015-10-10', '4242', '2015-10-05', 'CANCELADA', '0', '11')
         sub2 = Subscription('2015-10-10', '4243', '2015-10-05', 'CANCELADA', '0', '11')
-        sub3 = Subscription('2015-10-10', '4244', '2015-10-05', 'CANCELADA', '0', '11')
+        sub3 = Subscription('2015-11-10', '4244', '2015-11-05', 'CANCELADA', '0', '11')
 
         self.subs.add(sub1)
         self.subs.add(sub2)
-        self.assertEqual(self.subs.get_total_subs(), 2)
         self.subs.add(sub3)
-        self.assertEqual(self.subs.get_total_subs(), 3)
+        self.subs.load_months()
+        self.assertEqual(self.subs.get_total_subs('2015-10'), 2)
+        self.assertEqual(self.subs.get_total_subs('2015-11'), 1)
 
     def test_get_total_cancelations(self):
         sub1 = Subscription('', '4242', '2015-10-5', 'ATIVA', '1', '6')
@@ -48,6 +49,8 @@ class TestSubscriptions(unittest.TestCase):
         self.subs.add(sub1)
         self.subs.add(sub2)
         self.subs.add(sub3)
+
+        self.subs.load_months()
 
         cancelations = self.subs.get_total_cancelations()
         self.assertTrue(cancelations == 2)
@@ -61,6 +64,8 @@ class TestSubscriptions(unittest.TestCase):
         self.subs.add(sub2)
         self.subs.add(sub3)
 
+        self.subs.load_months()
+
         active_subs = self.subs.get_total_actives()
         self.assertEqual(active_subs, 2)
 
@@ -72,6 +77,8 @@ class TestSubscriptions(unittest.TestCase):
         self.subs.add(sub1)
         self.subs.add(sub2)
         self.subs.add(sub3)
+
+        self.subs.load_months()
 
         active_subs = self.subs.get_total_actives('2015-10')
         self.assertTrue(active_subs == 2)
@@ -95,6 +102,8 @@ class TestSubscriptions(unittest.TestCase):
         self.subs.add(sub2)
         self.subs.add(sub3)
 
+        self.subs.load_months()
+
         cancelations = self.subs.get_total_cancelations('2015-10')
         self.assertTrue(cancelations == 2)
 
@@ -114,6 +123,8 @@ class TestSubscriptions(unittest.TestCase):
         for sub in subs:
             self.subs.add(sub)
 
+        self.subs.load_months()
+
         subs_on_october = self.subs.get_total_subs('2015-10')
         self.assertEqual(subs_on_october, 3)
 
@@ -125,6 +136,8 @@ class TestSubscriptions(unittest.TestCase):
         self.subs.add(sub1)
         self.subs.add(sub2)
         self.subs.add(sub3)
+
+        self.subs.load_months()
 
         months_count = self.subs.load_months()
         self.assertEqual(months_count, 6)
@@ -149,6 +162,8 @@ class TestSubscriptions(unittest.TestCase):
 
         for sub in subs:
             self.subs.add(sub)
+
+        self.subs.load_months()
 
         amount_2015_02 = self.subs.get_new('2015-02')
         self.assertEqual(amount_2015_02, 2)
