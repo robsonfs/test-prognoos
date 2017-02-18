@@ -45,14 +45,8 @@ class Subscriptions:
             return len([x for x in filtered])
         return len(cancelations)
 
-    def get_total_actives(self, period=None):
-        actives = [x for x in self._subs if int(x.is_active)]
-        if period:
-            filtered = filter(
-                lambda x: self.get_period(x.payment_date) == period, actives
-            )
-            return len([x for x in filtered])
-        return len(actives)
+    def get_total_actives(self, period):
+        return self.get_total_subs(period) - self.get_total_cancelations(period)
 
     def get_period(self, date_string):
         return date_string.split(' ')[0][:-3]

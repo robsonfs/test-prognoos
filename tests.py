@@ -66,7 +66,7 @@ class TestSubscriptions(unittest.TestCase):
 
         self.subs.load_months()
 
-        active_subs = self.subs.get_total_actives()
+        active_subs = self.subs.get_total_actives('2015-10')
         self.assertEqual(active_subs, 2)
 
     def test_get_total_active_by_month(self):
